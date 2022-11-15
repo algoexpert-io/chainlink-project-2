@@ -1,0 +1,36 @@
+# vscode
+.vscode
+
+# hardhat
+artifacts
+cache
+deployments
+node_modules
+coverage
+coverage.json
+typechain
+
+# don't push the environment vars!
+.env
+
+# Built application files
+.DS*
+*.apk
+*.ap_
+*.aab
+
+
+
+# Version control
+vcs.xml
+
+# lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+
+# lint/reports/
+
+gas-report.txt
+

@@ -28,13 +28,16 @@ contract FortuneTeller is VRFConsumerBaseV2, ConfirmedOwner {
         "You will learn patience from Smart Contracts."
     ];
 
+    string public lastReturnedFortune;
+
     struct RequestStatus {
         bool fulfilled; // whether the request has been successfully fulfilled
         bool exists; // whether a requestId exists
         uint256[] randomWords;
     }
 
-    mapping(uint256 => RequestStatus) public s_requests; /* requestId --> requestStatus */
+    /* requestId --> requestStatus */
+    mapping(uint256 => RequestStatus) public s_requests;
     VRFCoordinatorV2Interface COORDINATOR;
 
     // Your VRF subscription ID.
@@ -61,7 +64,7 @@ contract FortuneTeller is VRFConsumerBaseV2, ConfirmedOwner {
     // The default is 3, but we set to 1 for faster dev.
     uint16 requestConfirmations = 1;
 
-    // For this example, retrieve 2 random values in one request.
+    // For this example, retrieve 1 random value per request.
     // Cannot exceed VRFCoordinatorV2.MAX_NUM_WORDS.
     uint32 numWords = 1;
 
@@ -121,21 +124,27 @@ contract FortuneTeller is VRFConsumerBaseV2, ConfirmedOwner {
 
     function seekFortune() external payable {
         require(
-            msg.value >= 0.1 ether,
+            msg.value >= 0.001 ether,
             "Insufficient payment to the fortune teller"
         );
 
         require(lastRequestId != 0, "No requests fulfilled as yet");
 
+        string memory fortune = getFortune();
         IFortuneSeeker seeker = IFortuneSeeker(msg.sender);
-
-        string memory returnedFortune = fortunes[
-            s_requests[lastRequestId].randomWords[0] % fortunes.length
-        ];
-        seeker.fulfillFortune(returnedFortune);
+        seeker.fulfillFortune(fortune);
     }
 
-    function getBalance() public view returns (uint256) {
+    function getFortune() public returns (string memory) {
+        string memory fortune = fortunes[
+            s_requests[lastRequestId].randomWords[0] % fortunes.length
+        ];
+
+        lastReturnedFortune = fortune;
+        return fortune;
+    }
+
+    function getContractBalance() public view returns (uint256) {
         return address(this).balance;
     }
 
@@ -144,5 +153,3 @@ contract FortuneTeller is VRFConsumerBaseV2, ConfirmedOwner {
         require(sent, "Failed to send Ether in withdraw");
     }
 }
-
-// 0x5ff05C9066Eef2bd3382536E607AD7Ef0c425Ad1
