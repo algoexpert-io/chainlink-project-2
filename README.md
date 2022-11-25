@@ -24,16 +24,21 @@ You can have a time based (cron-like) automation schedule or you can have custom
 As long as `FortuneTeller` is invoked to generate new random numbers, `FortuneSeeker` will receive a different (except by coincidence) Fortune from `FortuneTeller` - the frequency depends on the `interval` that you tell the Chainlink Automation Network you want your contract invoked, and will continue for so long as `FortuneSeeker` can pay `FortuneTeller` and for so long as your Chainlink Automation Upkeep registration has enough LINK balance.
 
 
+## Getting started
+- Install the NPM packages
+- Fill in the Environment Variables needed in `hardhat.config.js` to connect your wallet, and other API keys.
+- Run `yarn hardhat test` to run the tests.
+- Run `yarn hardhat` to see the Hardhat Tasks available.  Two custom tasks: `deploy-teller` and `deploy-seeker` have been included in `hardhat.config.js`
 
 
 ## Tooling used
 - Hardhat
-- JavaScript
+- JavaScript/ NodeJs
 - Metamask Browser Wallet
 - Avalanche Fuji Network
 - Chainlink Decentralized Oracle Services
 
 ## Resources & Support
-While BlockchainExpert maintains this repo, you can also contact the author on [LinkedIn](https://linkedin.com/in/zubinpratap) [Twitter](https://twitter.com/@zubinpratap)
+While BlockchainExpert maintains this repo, you can also contact the author on [LinkedIn](https://linkedin.com/in/zubinpratap) and [Twitter.](https://twitter.com/@zubinpratap)
 
 You can access further [Chainlink Resources and Content here.](https://chain.link/)
